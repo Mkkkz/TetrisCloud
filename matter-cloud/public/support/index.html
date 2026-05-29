@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Suporte — Matter Cloud</title>
+    <meta name="description" content="Tire suas dúvidas técnicas, explore nossa FAQ estruturada ou abra um ticket de suporte avançado com nosso time.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root[data-theme="dark"] {
+            --bg-primary: #030712;
+            --bg-secondary: #0b0f19;
+            --bg-glass: rgba(11, 15, 25, 0.75);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.15);
+        }
+        :root[data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.75);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.08);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'DM Sans', sans-serif;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Navbar Styling */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--bg-glass);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4.5rem;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .nav-logo img { height: 32px; width: auto; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--text-primary); transform: translateY(-1px); }
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+        .theme-toggle:hover { transform: scale(1.05); }
+        .theme-toggle .sun { display: none; }
+        :root[data-theme="light"] .theme-toggle .moon { display: none; }
+        :root[data-theme="light"] .theme-toggle .sun { display: block; }
+        .mobile-menu-btn { display: none; background: transparent; border: none; color: var(--text-primary); cursor: pointer; }
+
+        .mobile-nav {
+            position: fixed;
+            top: 4.5rem;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5rem;
+        }
+        .mobile-nav.open { height: calc(100vh - 4.5rem); padding: 2rem 1.5rem; }
+        .mobile-nav .nav-link { font-size: 1.2rem; padding: 1rem 0; border-bottom: 1px solid var(--border-color); font-family: 'Sora', sans-serif; }
+
+        /* Header Style */
+        .support-header {
+            padding: 5rem 0 3rem 0;
+            text-align: center;
+        }
+        .support-header h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .support-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Support Cards Grid & Smooth Move Animations */
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 5rem;
+        }
+        .support-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+        }
+        .support-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        .support-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+        .support-card:hover .support-card-icon {
+            transform: scale(1.1);
+        }
+        .support-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .support-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* FAQ and Mockup Ticket Section */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            padding-bottom: 6rem;
+        }
+        .faq-section h2, .ticket-section h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+        .faq-item {
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+        .faq-item:hover {
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+        .faq-trigger {
+            width: 100%;
+            padding: 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            text-align: left;
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .faq-content {
+            padding: 0 1.25rem;
+            height: 0;
+            overflow: hidden;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            transition: height 0.25s ease, padding 0.25s ease;
+        }
+        .faq-item.open .faq-content {
+            height: auto;
+            padding-bottom: 1.25rem;
+        }
+        .faq-trigger i {
+            transition: transform 0.2s ease;
+        }
+        .faq-item.open .faq-trigger i {
+            transform: rotate(180deg);
+        }
+
+        /* Ticket Mockup & Focus Animations */
+        .ticket-mockup {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .form-control {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .btn-submit {
+            width: 100%;
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            padding: 0.85rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 3rem 0;
+        }
+        .footer-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+        }
+        .footer-brand img { height: 28px; width: auto; }
+
+        @media (max-width: 968px) {
+            .support-grid { grid-template-columns: 1fr; }
+            .split-layout { grid-template-columns: 1fr; gap: 4rem; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .footer-flex { flex-direction: column; gap: 1.5rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="nav-logo">
+                <img src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/imagem/MotterCloud_mpq32p3l-8143da0633f612ab17f78134d418fbc1.png" alt="Matter Cloud Logo">
+                <span>Matter Cloud</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Início</a>
+                <a href="/discord" class="nav-link">Discord</a>
+                <a href="/support" class="nav-link active">Suporte</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alterar tema">
+                    <i data-lucide="moon" class="moon"></i>
+                    <i data-lucide="sun" class="sun"></i>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu móvel">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="/" class="nav-link">Início</a>
+        <a href="/discord" class="nav-link">Discord</a>
+        <a href="/support" class="nav-link active">Suporte</a>
+    </div>
+
+    <header class="support-header container">
+        <h1>Como podemos ajudar?</h1>
+        <p>Explore canais diretos de documentação, ferramentas comunitárias ou inicie um atendimento direto com nossa engenharia.</p>
+    </header>
+
+    <section class="container support-grid">
+        <a href="/discord" class="support-card">
+            <div class="support-card-icon"><i data-lucide="message-square"></i></div>
+            <h3>Suporte via Discord</h3>
+            <p>O canal principal para tirar dúvidas de configuração e interagir com o ecossistema rápido.</p>
+        </a>
+        <div class="support-card" style="cursor: pointer;">
+            <div class="support-card-icon"><i data-lucide="book-open"></i></div>
+            <h3>Documentação</h3>
+            <p>Guias completos passo a passo contendo tudo sobre deploys, limites de nós e configurações de runtime.</p>
+        </div>
+        <div class="support-card" style="cursor: pointer;">
+            <div class="support-card-icon"><i data-lucide="mail"></i></div>
+            <h3>E-mail de Contato</h3>
+            <p>Envie mensagens formais e consultas institucionais diretamente para support@mattercloud.io.</p>
+        </div>
+    </section>
+
+    <main class="container split-layout">
+        <section class="faq-section">
+            <h2>Perguntas Frequentes</h2>
+            
+            <div class="faq-item">
+                <button class="faq-trigger">
+                    <span>O Matter Cloud é gratuito?</span>
+                    <i data-lucide="chevron-down"></i>
+                </button>
+                <div class="faq-content">
+                    <p>Atualmente a plataforma encontra-se em período Beta Fechado/Aberto, oferecendo planos inteiramente gratuitos para testes de estresse, validação estrutural e aprimoramento de nós.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-trigger">
+                    <span>Quais runtimes são aceitas de forma nativa?</span>
+                    <i data-lucide="chevron-down"></i>
+                </button>
+                <div class="faq-content">
+                    <p>Oferecemos suporte otimizado completo para ecossistemas Node.js (v18, v20+) e linguagens Python estruturadas prontas para uso em produção.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-trigger">
+                    <span>Quando os planos corporativos serão lançados?</span>
+                    <i data-lucide="chevron-down"></i>
+                </button>
+                <div class="faq-content">
+                    <p>Nossos pacotes premium escaláveis estão em estágio final de desenho operacional e regulamentação, planejados para implantação automatizada em breve.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="ticket-section">
+            <h2>Simulação de Ticket</h2>
+            <div class="ticket-mockup">
+                <form id="mockTicketForm" onsubmit="event.preventDefault(); alert('Este formulário é apenas uma simulação visual da interface front-end.');">
+                    <div class="form-group">
+                        <label class="form-label">Nome Completo</label>
+                        <input type="text" class="form-control" placeholder="Seu nome" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">E-mail Cadastrado</label>
+                        <input type="email" class="form-control" placeholder="seuemail@exemplo.com" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Assunto Técnico</label>
+                        <input type="text" class="form-control" placeholder="Ex: Falha no deploy Node.js" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Descrição do Problema</label>
+                        <textarea class="form-control" rows="4" placeholder="Detalhes técnicos sobre sua dúvida..." style="resize: none;" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Enviar Ticket</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-flex">
+            <a href="/" class="footer-brand">
+                <img src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/imagem/MotterCloud_mpq32p3l-8143da0633f612ab17f78134d418fbc1.png" alt="Matter Cloud Logo">
+                <span>Matter Cloud</span>
+            </a>
+            <div>&copy; 2026 Matter Cloud. Todos os direitos reservados.</div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Theme system
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            let newTheme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
+            const isOpen = mobileNav.classList.contains('open');
+            mobileMenuBtn.innerHTML = isOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+            lucide.createIcons();
+        });
+
+        // FAQ Collapse Accordion Mechanism
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const parent = trigger.parentElement;
+                const isOpen = parent.classList.contains('open');
+                
+                document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('open'));
+                
+                if (!isOpen) {
+                    parent.classList.add('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
