@@ -3,947 +3,1231 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Motter Cloud — Hospedagem para Bots e Aplicações</title>
-  <meta name="description" content="Hospedagem moderna para bots e aplicações Node.js e Python. Infraestrutura estável, suporte dedicado e deploy rápido." />
-  <meta name="keywords" content="hospedagem, bots, discord bot, nodejs, python, cloud, motter cloud" />
-  <meta property="og:title" content="Motter Cloud" />
-  <meta property="og:description" content="Hospedagem simples para bots e aplicações." />
-  <meta property="og:url" content="https://mottercloud.online" />
-  <meta property="og:type" content="website" />
+
+  <!-- Primary SEO -->
+  <title data-i18n="meta.title">Motter Cloud — Hospedagem para Bots e Aplicações</title>
+  <meta name="description" data-i18n="meta.desc" content="Infraestrutura moderna para bots e aplicações Node.js e Python. Deploy rápido, runtime 24/7 e suporte dedicado." />
+  <meta name="keywords" content="hospedagem, bots, discord bot, nodejs, python, cloud hosting, motter cloud" />
   <link rel="canonical" href="https://mottercloud.online/" />
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mottercloud.online/" />
+  <meta property="og:title" data-i18n="meta.og_title" content="Motter Cloud" />
+  <meta property="og:description" data-i18n="meta.og_desc" content="Infraestrutura moderna para bots e aplicações." />
+  <meta property="og:image" content="https://mottercloud.online/og-image.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" data-i18n="meta.og_title" content="Motter Cloud" />
+  <meta name="twitter:description" data-i18n="meta.og_desc" content="Infraestrutura moderna para bots e aplicações." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="icon" type="image/png" href="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@0.441.0/dist/umd/lucide.min.js"></script>
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #f4f3f0;
-      --bg2: #eceae6;
-      --surface: #ffffff;
-      --surface2: #f0eeea;
-      --border: rgba(0,0,0,0.08);
-      --border2: rgba(0,0,0,0.12);
-      --text: #111010;
-      --text2: #4a4845;
-      --text3: #7a7774;
-      --accent: #2a6cf6;
-      --accent2: #1a55d8;
-      --accent-glow: rgba(42,108,246,0.18);
-      --accent-soft: rgba(42,108,246,0.08);
-      --card-bg: rgba(255,255,255,0.7);
-      --card-border: rgba(0,0,0,0.07);
-      --glass: rgba(255,255,255,0.55);
-      --shadow: 0 2px 20px rgba(0,0,0,0.07);
-      --shadow-lg: 0 8px 40px rgba(0,0,0,0.10);
-      --radius: 16px;
-      --radius-sm: 10px;
-      --nav-bg: rgba(244,243,240,0.82);
-      --transition: 0.28s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    [data-theme="dark"] {
-      --bg: #0b0c0f;
-      --bg2: #111318;
-      --surface: #15171c;
-      --surface2: #1c1f26;
-      --border: rgba(255,255,255,0.06);
-      --border2: rgba(255,255,255,0.10);
-      --text: #f0eff0;
-      --text2: #a8a7b0;
-      --text3: #65636e;
-      --accent: #4a8bff;
-      --accent2: #2a6cf6;
-      --accent-glow: rgba(74,139,255,0.20);
-      --accent-soft: rgba(74,139,255,0.10);
-      --card-bg: rgba(21,23,28,0.75);
-      --card-border: rgba(255,255,255,0.06);
-      --glass: rgba(21,23,28,0.60);
-      --shadow: 0 2px 20px rgba(0,0,0,0.35);
-      --shadow-lg: 0 8px 40px rgba(0,0,0,0.50);
-      --nav-bg: rgba(11,12,15,0.82);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.65;
-      min-height: 100vh;
-      overflow-x: hidden;
-      transition: background var(--transition), color var(--transition);
-    }
-
-    /* ── SCROLLBAR ─────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
-
-    /* ── GRID PATTERN ──────────────────────────────── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.5;
-    }
-
-    /* ── NAVBAR ────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      padding: 0 clamp(1rem, 5vw, 3rem);
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border);
-      transition: background var(--transition), border-color var(--transition);
-    }
-
-    .nav-inner {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-      letter-spacing: -0.02em;
-      flex-shrink: 0;
-    }
-
-    .nav-logo img {
-      width: 30px;
-      height: 30px;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      flex: 1;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text2);
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 6px 14px;
-      border-radius: 8px;
-      transition: color var(--transition), background var(--transition);
-    }
-
-    .nav-links a:hover, .nav-links a.active {
-      color: var(--text);
-      background: var(--border);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-left: auto;
-    }
-
-    .btn-discord-nav {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 7px 16px;
-      border-radius: 8px;
-      transition: background var(--transition), transform var(--transition);
-    }
-
-    .btn-discord-nav:hover { background: var(--accent2); transform: translateY(-1px); }
-
-    .theme-toggle {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      border: 1px solid var(--border2);
-      background: var(--surface);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text2);
-      transition: all var(--transition);
-    }
-
-    .theme-toggle:hover { background: var(--surface2); color: var(--text); }
-    .theme-toggle svg { width: 16px; height: 16px; }
-
-    .hamburger {
-      display: none;
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      border: 1px solid var(--border2);
-      background: var(--surface);
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      color: var(--text2);
-      transition: all var(--transition);
-    }
-
-    .hamburger svg { width: 18px; height: 18px; }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 64px; left: 0; right: 0;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem;
-      z-index: 99;
-      flex-direction: column;
-      gap: 0.5rem;
-      backdrop-filter: blur(20px);
-    }
-
-    .mobile-menu.open { display: flex; }
-
-    .mobile-menu a {
-      text-decoration: none;
-      color: var(--text2);
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 10px 14px;
-      border-radius: 8px;
-      transition: all var(--transition);
-    }
-
-    .mobile-menu a:hover { background: var(--border); color: var(--text); }
-
-    /* ── HERO ──────────────────────────────────────── */
-    .hero {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 7rem 1.5rem 5rem;
-      overflow: hidden;
-    }
-
-    .hero-glow {
-      position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-      animation: pulse 4s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
-      50% { opacity: 1; transform: translateX(-50%) scale(1.06); }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 760px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--accent-soft);
-      border: 1px solid var(--accent-glow);
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 99px;
-      margin-bottom: 1.75rem;
-      animation: fadeUp 0.6s ease both;
-    }
-
-    .hero-badge svg { width: 13px; height: 13px; }
-
-    .hero-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.04em;
-      color: var(--text);
-      margin-bottom: 1.25rem;
-      animation: fadeUp 0.6s 0.1s ease both;
-    }
-
-    .hero-title span { color: var(--accent); }
-
-    .hero-sub {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      color: var(--text2);
-      font-weight: 400;
-      max-width: 540px;
-      margin: 0 auto 2.5rem;
-      animation: fadeUp 0.6s 0.2s ease both;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      animation: fadeUp 0.6s 0.3s ease both;
-    }
-
-    /* ── BUTTONS ───────────────────────────────────── */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 12px 24px;
-      border-radius: var(--radius-sm);
-      border: none;
-      cursor: pointer;
-      transition: all var(--transition);
-      font-family: inherit;
-    }
-
-    .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 0 0 0 var(--accent-glow);
-    }
-
-    .btn-primary:hover {
-      background: var(--accent2);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 24px var(--accent-glow);
-    }
-
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border2);
-    }
-
-    .btn-secondary:hover {
-      background: var(--surface2);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-    }
-
-    /* ── SECTIONS ──────────────────────────────────── */
-    section {
-      position: relative;
-      z-index: 1;
-      padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 5vw, 3rem);
-    }
-
-    .section-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 0.85rem;
-    }
-
-    .section-label svg { width: 12px; height: 12px; }
-
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      margin-bottom: 1rem;
-      line-height: 1.15;
-    }
-
-    .section-desc {
-      color: var(--text2);
-      font-size: 1.05rem;
-      max-width: 560px;
-      margin-bottom: 3.5rem;
-    }
-
-    /* ── FEATURES GRID ─────────────────────────────── */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .feature-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: all var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0;
-      transition: opacity var(--transition);
-    }
-
-    .feature-card:hover {
-      border-color: var(--accent-glow);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg), 0 0 0 1px var(--accent-glow);
-    }
-
-    .feature-card:hover::before { opacity: 1; }
-
-    .feature-icon {
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      background: var(--accent-soft);
-      border: 1px solid var(--accent-glow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent);
-      margin-bottom: 1.25rem;
-    }
-
-    .feature-icon svg { width: 20px; height: 20px; }
-
-    .feature-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-card p {
-      font-size: 0.9rem;
-      color: var(--text2);
-      line-height: 1.7;
-    }
-
-    /* ── DIVIDER ───────────────────────────────────── */
-    .section-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border2), transparent);
-      margin: 0 clamp(1rem, 5vw, 3rem);
-    }
-
-    /* ── BENEFITS ──────────────────────────────────── */
-    .benefits-section { background: var(--bg2); }
-
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-
-    .benefit-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(12px);
-      transition: all var(--transition);
-    }
-
-    .benefit-item:hover {
-      border-color: var(--accent-glow);
-      background: var(--surface);
-    }
-
-    .benefit-dot {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      background: var(--accent-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent);
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .benefit-dot svg { width: 17px; height: 17px; }
-
-    .benefit-item h4 {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.3rem;
-    }
-
-    .benefit-item p { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
-
-    /* ── CTA ───────────────────────────────────────── */
-    .cta-section {
-      text-align: center;
-    }
-
-    .cta-box {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: clamp(3rem, 6vw, 5rem) 2rem;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      position: relative;
-      overflow: hidden;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .cta-box::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    }
-
-    .cta-glow {
-      position: absolute;
-      bottom: -40%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 400px;
-      height: 300px;
-      background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .cta-box h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      margin-bottom: 1rem;
-      position: relative;
-    }
-
-    .cta-box p {
-      color: var(--text2);
-      font-size: 1.05rem;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .cta-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-    }
-
-    /* ── FOOTER ────────────────────────────────────── */
-    footer {
-      position: relative;
-      z-index: 1;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 2.5rem clamp(1rem, 5vw, 3rem);
-    }
-
-    .footer-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
-
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-    }
-
-    .footer-logo img {
-      width: 26px; height: 26px;
-      object-fit: contain;
-      border-radius: 7px;
-    }
-
-    .footer-links {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      color: var(--text3);
-      font-size: 0.85rem;
-      transition: color var(--transition);
-    }
-
-    .footer-links a:hover { color: var(--accent); }
-    .footer-links a svg { width: 14px; height: 14px; }
-
-    .footer-copy {
-      color: var(--text3);
-      font-size: 0.8rem;
-      width: 100%;
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-      margin-top: 0.5rem;
-    }
-
-    /* ── ANIMATIONS ────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-
-    /* ── RESPONSIVE ────────────────────────────────── */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .btn-discord-nav { display: none; }
-      .hamburger { display: flex; }
-      .features-grid { grid-template-columns: 1fr; }
-      .benefits-grid { grid-template-columns: 1fr; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
-    }
+/* ─────────────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; text-size-adjust: 100%; }
+
+/* ─────────────────────────────────────────────────
+   DESIGN TOKENS
+───────────────────────────────────────────────── */
+:root {
+  /* Colours – Light */
+  --bg-base:       #f8f9fb;
+  --bg-subtle:     #f0f2f6;
+  --bg-surface:    #ffffff;
+  --bg-elevated:   #ffffff;
+  --border-soft:   rgba(0,0,0,0.06);
+  --border-med:    rgba(0,0,0,0.10);
+  --text-primary:  #0d0f14;
+  --text-secondary:#52566b;
+  --text-muted:    #9095a8;
+  --accent:        #2563eb;
+  --accent-hover:  #1d4ed8;
+  --accent-subtle: rgba(37,99,235,0.08);
+  --accent-glow:   rgba(37,99,235,0.16);
+  --card-bg:       rgba(255,255,255,0.80);
+  --card-border:   rgba(0,0,0,0.07);
+  --nav-bg:        rgba(248,249,251,0.88);
+  --shadow-sm:     0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:     0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,0.10);
+
+  /* Spacing */
+  --nav-h: 64px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-2xl: 24px;
+
+  /* Animation */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur: 220ms;
+}
+
+[data-theme="dark"] {
+  --bg-base:       #0a0b0f;
+  --bg-subtle:     #0f1116;
+  --bg-surface:    #13151b;
+  --bg-elevated:   #191c24;
+  --border-soft:   rgba(255,255,255,0.05);
+  --border-med:    rgba(255,255,255,0.09);
+  --text-primary:  #edeef2;
+  --text-secondary:#9095a8;
+  --text-muted:    #4e5468;
+  --accent:        #3b82f6;
+  --accent-hover:  #2563eb;
+  --accent-subtle: rgba(59,130,246,0.10);
+  --accent-glow:   rgba(59,130,246,0.18);
+  --card-bg:       rgba(19,21,27,0.85);
+  --card-border:   rgba(255,255,255,0.05);
+  --nav-bg:        rgba(10,11,15,0.88);
+  --shadow-sm:     0 1px 3px rgba(0,0,0,0.30);
+  --shadow-md:     0 4px 16px rgba(0,0,0,0.40);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,0.55);
+}
+
+/* ─────────────────────────────────────────────────
+   BODY & SCROLLBAR
+───────────────────────────────────────────────── */
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-med); border-radius: 99px; }
+
+/* Subtle dot grid background */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background-image: radial-gradient(circle, var(--border-soft) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.7;
+}
+
+/* ─────────────────────────────────────────────────
+   LAYOUT HELPERS
+───────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
+}
+
+/* ─────────────────────────────────────────────────
+   NAVIGATION
+───────────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--nav-h);
+  display: flex; align-items: center;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid var(--border-soft);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.nav__inner {
+  width: 100%; max-width: 1280px; margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+.nav__logo {
+  display: flex; align-items: center; gap: 9px;
+  text-decoration: none; flex-shrink: 0; margin-right: 1.5rem;
+}
+
+.nav__logo-img {
+  width: 28px; height: 28px;
+  border-radius: 7px; object-fit: contain;
+  display: block;
+}
+
+.nav__logo-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.975rem; font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.nav__links {
+  display: flex; align-items: center; gap: 2px;
+  list-style: none;
+}
+
+.nav__links a {
+  display: block;
+  text-decoration: none; color: var(--text-secondary);
+  font-size: 0.855rem; font-weight: 500;
+  padding: 5px 12px; border-radius: var(--r-sm);
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+  white-space: nowrap;
+}
+
+.nav__links a:hover { color: var(--text-primary); background: var(--border-soft); }
+.nav__links a.is-active { color: var(--text-primary); background: var(--border-soft); }
+
+.nav__spacer { flex: 1; }
+
+.nav__controls {
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+/* Language selector */
+.lang-select {
+  appearance: none;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-med);
+  border-radius: var(--r-sm);
+  color: var(--text-secondary);
+  font-family: inherit; font-size: 0.8rem; font-weight: 500;
+  padding: 5px 28px 5px 10px;
+  cursor: pointer; outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239095a8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.lang-select:hover { border-color: var(--accent); color: var(--text-primary); }
+.lang-select option { background: var(--bg-elevated); }
+
+/* Icon buttons */
+.icon-btn {
+  width: 34px; height: 34px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-med);
+  background: var(--bg-elevated);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); flex-shrink: 0;
+  transition: all var(--dur) var(--ease);
+}
+.icon-btn:hover { background: var(--bg-subtle); color: var(--text-primary); border-color: var(--border-med); }
+.icon-btn svg { width: 15px; height: 15px; pointer-events: none; }
+
+/* CTA button in nav */
+.nav__cta {
+  display: flex; align-items: center; gap: 6px;
+  text-decoration: none; white-space: nowrap;
+  background: var(--accent); color: #fff;
+  font-size: 0.825rem; font-weight: 600;
+  padding: 6px 14px; border-radius: var(--r-sm);
+  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.nav__cta:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 14px var(--accent-glow); }
+.nav__cta svg { width: 14px; height: 14px; }
+
+/* Hamburger */
+.nav__hamburger {
+  display: none;
+}
+
+/* Mobile drawer */
+.nav__drawer {
+  display: none;
+  position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 199;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-soft);
+  padding: 0.75rem 1rem;
+  flex-direction: column; gap: 2px;
+  animation: slideDown 0.2s var(--ease);
+}
+.nav__drawer.is-open { display: flex; }
+.nav__drawer a {
+  text-decoration: none; color: var(--text-secondary);
+  font-size: 0.9rem; font-weight: 500;
+  padding: 9px 12px; border-radius: var(--r-sm);
+  transition: all var(--dur) var(--ease);
+}
+.nav__drawer a:hover { background: var(--border-soft); color: var(--text-primary); }
+.nav__drawer-sep {
+  height: 1px; background: var(--border-soft); margin: 0.5rem 0;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─────────────────────────────────────────────────
+   BUTTONS
+───────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  text-decoration: none; font-family: inherit;
+  font-weight: 600; border: none; cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--dur) var(--ease);
+}
+.btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+.btn--primary {
+  background: var(--accent); color: #fff;
+  font-size: 0.9rem; padding: 11px 22px; border-radius: var(--r-md);
+  box-shadow: 0 0 0 0 var(--accent-glow);
+}
+.btn--primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+.btn--ghost {
+  background: var(--bg-elevated); color: var(--text-primary);
+  font-size: 0.9rem; padding: 10px 22px; border-radius: var(--r-md);
+  border: 1px solid var(--border-med);
+}
+.btn--ghost:hover {
+  background: var(--bg-subtle);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─────────────────────────────────────────────────
+   SECTION PRIMITIVES
+───────────────────────────────────────────────── */
+.section {
+  position: relative; z-index: 1;
+  padding-block: clamp(4rem, 8vw, 6.5rem);
+}
+
+.section--alt { background: var(--bg-subtle); }
+
+.section__header { margin-bottom: clamp(2.5rem, 4vw, 3.5rem); }
+
+.section__eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.section__eyebrow svg { width: 11px; height: 11px; }
+
+.section__title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.65rem, 3.2vw, 2.4rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  color: var(--text-primary); line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.section__lead {
+  color: var(--text-secondary); font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  max-width: 520px; line-height: 1.7;
+}
+
+.divider {
+  height: 1px; position: relative; z-index: 1;
+  background: linear-gradient(90deg, transparent 0%, var(--border-med) 30%, var(--border-med) 70%, transparent 100%);
+}
+
+/* ─────────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────────── */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100svh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: calc(var(--nav-h) + 5rem) clamp(1.25rem, 5vw, 3rem) 5rem;
+  overflow: hidden;
+}
+
+.hero__glow {
+  position: absolute; top: -10%; left: 50%;
+  transform: translateX(-50%);
+  width: min(700px, 90vw); height: 500px;
+  background: radial-gradient(ellipse 60% 50% at 50% 40%, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+.hero__content {
+  position: relative; z-index: 1;
+  max-width: 760px; width: 100%;
+}
+
+.hero__badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--accent-subtle); border: 1px solid var(--accent-glow);
+  color: var(--accent); font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 99px; margin-bottom: 1.75rem;
+}
+.hero__badge svg { width: 12px; height: 12px; }
+
+.hero__title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 4.25rem);
+  font-weight: 800; line-height: 1.08;
+  letter-spacing: -0.04em; color: var(--text-primary);
+  margin-bottom: 1.25rem;
+}
+.hero__title em {
+  font-style: normal; color: var(--accent);
+}
+
+.hero__subtitle {
+  font-size: clamp(1rem, 2vw, 1.175rem);
+  color: var(--text-secondary); max-width: 520px;
+  margin-inline: auto; margin-bottom: 2.5rem; line-height: 1.7;
+}
+
+.hero__actions {
+  display: flex; gap: 0.875rem;
+  justify-content: center; flex-wrap: wrap;
+}
+
+/* ─────────────────────────────────────────────────
+   STATS BAR
+───────────────────────────────────────────────── */
+.statsbar {
+  position: relative; z-index: 1;
+  border-block: 1px solid var(--border-soft);
+  background: var(--bg-subtle);
+  padding-block: 1.5rem;
+}
+
+.statsbar__grid {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: clamp(2rem, 6vw, 5rem);
+}
+
+.statsbar__item {
+  text-align: center;
+}
+
+.statsbar__value {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  color: var(--text-primary); line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.statsbar__label {
+  font-size: 0.8rem; color: var(--text-muted); font-weight: 500;
+}
+
+/* ─────────────────────────────────────────────────
+   FEATURE CARDS
+───────────────────────────────────────────────── */
+.grid--3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.125rem;
+}
+
+@media (max-width: 900px) { .grid--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .grid--3 { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-xl);
+  padding: 1.75rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  position: relative; overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.card:hover {
+  border-color: var(--accent-glow);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.card:hover::before { opacity: 1; }
+
+.card__icon {
+  width: 40px; height: 40px; border-radius: var(--r-md);
+  background: var(--accent-subtle); border: 1px solid var(--accent-glow);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent); margin-bottom: 1.1rem;
+}
+.card__icon svg { width: 18px; height: 18px; }
+
+.card__title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.975rem; font-weight: 700;
+  color: var(--text-primary); margin-bottom: 0.4rem;
+}
+
+.card__body {
+  font-size: 0.875rem; color: var(--text-secondary); line-height: 1.68;
+}
+
+/* ─────────────────────────────────────────────────
+   BENEFITS LIST
+───────────────────────────────────────────────── */
+.grid--2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 700px) { .grid--2 { grid-template-columns: 1fr; } }
+
+.benefit {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.5rem; border-radius: var(--r-lg);
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.benefit:hover { border-color: var(--accent-glow); box-shadow: var(--shadow-sm); }
+
+.benefit__dot {
+  width: 34px; height: 34px; border-radius: var(--r-sm); flex-shrink: 0;
+  background: var(--accent-subtle); display: flex; align-items: center; justify-content: center;
+  color: var(--accent); margin-top: 2px;
+}
+.benefit__dot svg { width: 16px; height: 16px; }
+
+.benefit__title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  color: var(--text-primary); margin-bottom: 0.3rem;
+}
+.benefit__body { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.65; }
+
+/* ─────────────────────────────────────────────────
+   CTA SECTION
+───────────────────────────────────────────────── */
+.cta-box {
+  position: relative; overflow: hidden;
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: var(--r-2xl);
+  padding: clamp(3rem, 5vw, 4.5rem) 2rem;
+  text-align: center;
+  backdrop-filter: blur(12px);
+}
+.cta-box::before {
+  content: ''; position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.cta-box__glow {
+  position: absolute; bottom: -30%; left: 50%;
+  transform: translateX(-50%);
+  width: 50%; height: 60%;
+  background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-box__title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 800; letter-spacing: -0.035em;
+  color: var(--text-primary); margin-bottom: 0.875rem; position: relative;
+}
+.cta-box__body {
+  color: var(--text-secondary); font-size: 1.025rem;
+  margin-bottom: 2rem; position: relative; max-width: 420px; margin-inline: auto;
+}
+.cta-box__body { margin-bottom: 2rem; }
+.cta-box__actions {
+  display: flex; gap: 0.875rem; justify-content: center;
+  flex-wrap: wrap; position: relative;
+}
+
+/* ─────────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────────── */
+.footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border-soft);
+  padding-block: 2rem;
+  background: var(--bg-surface);
+}
+
+.footer__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1.25rem;
+}
+
+.footer__logo {
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none;
+}
+.footer__logo-img {
+  width: 22px; height: 22px; border-radius: 5px; object-fit: contain;
+}
+.footer__logo-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.875rem; font-weight: 800;
+  color: var(--text-primary); letter-spacing: -0.02em;
+}
+
+.footer__links {
+  display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap;
+}
+.footer__links a {
+  text-decoration: none; color: var(--text-muted); font-size: 0.82rem;
+  transition: color var(--dur) var(--ease);
+}
+.footer__links a:hover { color: var(--accent); }
+
+.footer__copy {
+  font-size: 0.78rem; color: var(--text-muted);
+}
+
+/* Full footer row with divider for larger layouts */
+.footer__row {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+
+/* ─────────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+.reveal--d1 { transition-delay: 0.07s; }
+.reveal--d2 { transition-delay: 0.14s; }
+.reveal--d3 { transition-delay: 0.21s; }
+.reveal--d4 { transition-delay: 0.28s; }
+.reveal--d5 { transition-delay: 0.35s; }
+.reveal--d6 { transition-delay: 0.42s; }
+
+/* ─────────────────────────────────────────────────
+   RESPONSIVE — GLOBAL
+───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav__links,
+  .nav__cta { display: none; }
+  .nav__hamburger { display: flex; }
+  .lang-select { font-size: 0.75rem; padding-inline: 8px 24px; }
+}
+
+/* Ultrawide: cap content + reduce empty space */
+@media (min-width: 1800px) {
+  .container { max-width: 1440px; }
+}
+
+/* TV / 4K — scale up base font */
+@media (min-width: 2400px) {
+  html { font-size: 18px; }
+  :root { --nav-h: 72px; }
+}
   </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <img src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png" alt="Motter Cloud" />
-      Motter Cloud
+<!-- ═══════════════════════ NAVIGATION ═══════════════════════ -->
+<header class="nav" role="banner">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo" aria-label="Motter Cloud — página inicial">
+      <img class="nav__logo-img"
+           src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png"
+           alt="Motter Cloud"
+           loading="eager" width="28" height="28" />
+      <span class="nav__logo-text">Motter Cloud</span>
     </a>
-    <nav class="nav-links">
-      <a href="/" class="active">Início</a>
-      <a href="/discord">Discord</a>
-      <a href="/suporte">Suporte</a>
+
+    <nav aria-label="Navegação principal">
+      <ul class="nav__links" role="list">
+        <li><a href="/" class="is-active" data-i18n="nav.home">Início</a></li>
+        <li><a href="/discord" data-i18n="nav.discord">Discord</a></li>
+        <li><a href="/suporte" data-i18n="nav.support">Suporte</a></li>
+      </ul>
     </nav>
-    <div class="nav-actions">
-      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener" class="btn-discord-nav">
-        <i data-lucide="message-circle"></i> Discord
-      </a>
-      <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
-        <i data-lucide="sun"></i>
+
+    <div class="nav__spacer" aria-hidden="true"></div>
+
+    <div class="nav__controls">
+      <select class="lang-select" id="langSelect" aria-label="Idioma">
+        <option value="pt">PT</option>
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+      </select>
+
+      <button class="icon-btn" id="themeToggle" aria-label="Alternar tema">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="themeIcon">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
       </button>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <i data-lucide="menu"></i>
+
+      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener noreferrer"
+         class="nav__cta" data-i18n="nav.cta">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Discord
+      </a>
+
+      <button class="icon-btn nav__hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="hamIcon">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
       </button>
     </div>
   </div>
-</nav>
+</header>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="/">Início</a>
-  <a href="/discord">Discord</a>
-  <a href="/suporte">Suporte</a>
-  <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener">Entrar no Discord</a>
+<!-- Mobile Drawer -->
+<div class="nav__drawer" id="drawer" role="navigation" aria-label="Menu mobile">
+  <a href="/" data-i18n="nav.home">Início</a>
+  <a href="/discord" data-i18n="nav.discord">Discord</a>
+  <a href="/suporte" data-i18n="nav.support">Suporte</a>
+  <div class="nav__drawer-sep"></div>
+  <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener noreferrer" data-i18n="nav.cta">Discord</a>
 </div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <i data-lucide="zap"></i>
-      Infraestrutura moderna
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__content">
+    <div class="hero__badge">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+      <span data-i18n="hero.badge">Infraestrutura moderna</span>
     </div>
-    <h1 class="hero-title">
-      Hospedagem simples para<br />
-      <span>bots e aplicações</span>
+
+    <h1 class="hero__title" id="heroTitle">
+      <span data-i18n="hero.title1">Hospedagem simples para</span><br />
+      <em data-i18n="hero.title2">bots e aplicações</em>
     </h1>
-    <p class="hero-sub">
+
+    <p class="hero__subtitle" data-i18n="hero.subtitle">
       Infraestrutura moderna para projetos Node.js e Python. Estável, rápida e com suporte dedicado.
     </p>
-    <div class="hero-actions">
-      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener" class="btn btn-primary">
-        <i data-lucide="message-circle"></i> Entrar no Discord
+
+    <div class="hero__actions">
+      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener noreferrer"
+         class="btn btn--primary" data-i18n="hero.cta1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Entrar no Discord
       </a>
-      <a href="/suporte" class="btn btn-secondary">
-        <i data-lucide="life-buoy"></i> Abrir Suporte
+      <a href="/suporte" class="btn btn--ghost" data-i18n="hero.cta2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        Abrir Suporte
       </a>
     </div>
   </div>
 </section>
 
-<div class="section-divider"></div>
-
-<!-- RECURSOS -->
-<section id="recursos">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-label"><i data-lucide="layers"></i> Recursos</div>
-      <h2 class="section-title">Tudo que você precisa<br />em um só lugar</h2>
-      <p class="section-desc">Ferramentas e infraestrutura pensadas para desenvolvedores que querem velocidade e confiabilidade.</p>
+<!-- ═══════════════════════ STATS ═══════════════════════ -->
+<div class="statsbar" aria-hidden="true">
+  <div class="container">
+    <div class="statsbar__grid">
+      <div class="statsbar__item">
+        <div class="statsbar__value">24/7</div>
+        <div class="statsbar__label" data-i18n="stats.uptime">Runtime contínuo</div>
+      </div>
+      <div class="statsbar__item">
+        <div class="statsbar__value">Node.js</div>
+        <div class="statsbar__label" data-i18n="stats.node">Runtime suportado</div>
+      </div>
+      <div class="statsbar__item">
+        <div class="statsbar__value">Python</div>
+        <div class="statsbar__label" data-i18n="stats.python">Runtime suportado</div>
+      </div>
+      <div class="statsbar__item">
+        <div class="statsbar__value" data-i18n="stats.isolatedVal">Isolado</div>
+        <div class="statsbar__label" data-i18n="stats.isolated">Containers por aplicação</div>
+      </div>
     </div>
-    <div class="features-grid">
-      <div class="feature-card reveal reveal-delay-1">
-        <div class="feature-icon"><i data-lucide="rocket"></i></div>
-        <h3>Deploy rápido</h3>
-        <p>Faça o deploy da sua aplicação em segundos. Processo simples, sem complicações.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════ RESOURCES ═══════════════════════ -->
+<section class="section" aria-labelledby="resourcesTitle">
+  <div class="container">
+    <div class="section__header reveal" id="resourcesTitle">
+      <p class="section__eyebrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 22 22 7 12 2"/>
+        </svg>
+        <span data-i18n="features.eyebrow">Recursos</span>
+      </p>
+      <h2 class="section__title" data-i18n="features.title">Tudo que você precisa em um só lugar</h2>
+      <p class="section__lead" data-i18n="features.lead">
+        Ferramentas e infraestrutura pensadas para quem quer velocidade e confiabilidade.
+      </p>
+    </div>
+
+    <div class="grid--3">
+      <article class="card reveal reveal--d1">
+        <div class="card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+          </svg>
+        </div>
+        <h3 class="card__title" data-i18n="features.f1.title">Deploy rápido</h3>
+        <p class="card__body" data-i18n="features.f1.body">Coloque sua aplicação no ar em segundos. Processo direto, sem configurações desnecessárias.</p>
+      </article>
+
+      <article class="card reveal reveal--d2">
+        <div class="card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3 class="card__title" data-i18n="features.f2.title">Runtime 24/7</h3>
+        <p class="card__body" data-i18n="features.f2.body">Bots e aplicações rodando continuamente, sem interrupções ou quedas inesperadas.</p>
+      </article>
+
+      <article class="card reveal reveal--d3">
+        <div class="card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3 class="card__title" data-i18n="features.f3.title">Monitoramento</h3>
+        <p class="card__body" data-i18n="features.f3.body">Acompanhe status e desempenho das suas aplicações em tempo real.</p>
+      </article>
+
+      <article class="card reveal reveal--d4">
+        <div class="card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+        </div>
+        <h3 class="card__title" data-i18n="features.f4.title">Containers isolados</h3>
+        <p class="card__body" data-i18n="features.f4.body">Cada aplicação em seu próprio container, garantindo segurança e estabilidade independentes.</p>
+      </article>
+
+      <article class="card reveal reveal--d5">
+        <div class="card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+            <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+          </svg>
+        </div>
+        <h3 class="card__title" data-i18n="features.f5.title">Infraestrutura estável</h3>
+        <p class="card__body" data-i18n="features.f5.body">Servidores de alta performance com redundância para máxima disponibilidade.</p>
+      </article>
+
+      <article class="card reveal reveal--d6">
+        <div class="card__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+          </svg>
+        </div>
+        <h3 class="card__title" data-i18n="features.f6.title">Suporte dedicado</h3>
+        <p class="card__body" data-i18n="features.f6.body">Time disponível para ajudar a qualquer momento pelo Discord.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ BENEFITS ═══════════════════════ -->
+<section class="section section--alt" aria-labelledby="benefitsTitle">
+  <div class="container">
+    <div class="section__header reveal" id="benefitsTitle">
+      <p class="section__eyebrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        <span data-i18n="benefits.eyebrow">Benefícios</span>
+      </p>
+      <h2 class="section__title" data-i18n="benefits.title">Por que escolher a Motter Cloud?</h2>
+      <p class="section__lead" data-i18n="benefits.lead">Performance, confiabilidade e simplicidade no mesmo lugar.</p>
+    </div>
+
+    <div class="grid--2">
+      <div class="benefit reveal reveal--d1">
+        <div class="benefit__dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="12" x2="2" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+            <line x1="6" y1="16" x2="6.01" y2="16"/><line x1="10" y1="16" x2="10.01" y2="16"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="benefit__title" data-i18n="benefits.b1.title">Baixa latência</h4>
+          <p class="benefit__body" data-i18n="benefits.b1.body">Respostas rápidas para seus usuários, onde quer que estejam.</p>
+        </div>
       </div>
-      <div class="feature-card reveal reveal-delay-2">
-        <div class="feature-icon"><i data-lucide="clock"></i></div>
-        <h3>Runtime 24/7</h3>
-        <p>Seus bots e aplicações rodando continuamente, sem interrupções ou quedas inesperadas.</p>
+
+      <div class="benefit reveal reveal--d2">
+        <div class="benefit__dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="benefit__title" data-i18n="benefits.b2.title">Segurança</h4>
+          <p class="benefit__body" data-i18n="benefits.b2.body">Ambientes isolados e proteção ativa para seus dados e aplicações.</p>
+        </div>
       </div>
-      <div class="feature-card reveal reveal-delay-3">
-        <div class="feature-icon"><i data-lucide="activity"></i></div>
-        <h3>Monitoramento</h3>
-        <p>Acompanhe o status e o desempenho das suas aplicações em tempo real.</p>
+
+      <div class="benefit reveal reveal--d3">
+        <div class="benefit__dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+            <polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="benefit__title" data-i18n="benefits.b3.title">Escalabilidade</h4>
+          <p class="benefit__body" data-i18n="benefits.b3.body">Cresça sem preocupação — a infraestrutura acompanha seu projeto.</p>
+        </div>
       </div>
-      <div class="feature-card reveal reveal-delay-1">
-        <div class="feature-icon"><i data-lucide="box"></i></div>
-        <h3>Containers isolados</h3>
-        <p>Cada aplicação roda em um container isolado, garantindo segurança e estabilidade total.</p>
+
+      <div class="benefit reveal reveal--d4">
+        <div class="benefit__dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="benefit__title" data-i18n="benefits.b4.title">Monitoramento contínuo</h4>
+          <p class="benefit__body" data-i18n="benefits.b4.body">Seus serviços sempre sob vigilância para antecipar problemas.</p>
+        </div>
       </div>
-      <div class="feature-card reveal reveal-delay-2">
-        <div class="feature-icon"><i data-lucide="server"></i></div>
-        <h3>Infraestrutura estável</h3>
-        <p>Servidores de alta performance com redundância para máxima disponibilidade.</p>
+
+      <div class="benefit reveal reveal--d5">
+        <div class="benefit__dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="benefit__title" data-i18n="benefits.b5.title">Alta disponibilidade</h4>
+          <p class="benefit__body" data-i18n="benefits.b5.body">Uptime elevado para que seus serviços nunca fiquem offline.</p>
+        </div>
       </div>
-      <div class="feature-card reveal reveal-delay-3">
-        <div class="feature-icon"><i data-lucide="headphones"></i></div>
-        <h3>Suporte dedicado</h3>
-        <p>Time disponível para ajudar você a qualquer momento pelo Discord.</p>
+
+      <div class="benefit reveal reveal--d6">
+        <div class="benefit__dot">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="benefit__title" data-i18n="benefits.b6.title">Fácil utilização</h4>
+          <p class="benefit__body" data-i18n="benefits.b6.body">Processo intuitivo do deploy ao monitoramento, sem curva de aprendizado.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="section-divider"></div>
+<div class="divider"></div>
 
-<!-- BENEFÍCIOS -->
-<section class="benefits-section">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-label"><i data-lucide="star"></i> Benefícios</div>
-      <h2 class="section-title">Por que escolher<br />a Motter Cloud?</h2>
-      <p class="section-desc">Entregamos o que importa: performance, confiabilidade e facilidade de uso.</p>
-    </div>
-    <div class="benefits-grid">
-      <div class="benefit-item reveal reveal-delay-1">
-        <div class="benefit-dot"><i data-lucide="gauge"></i></div>
-        <div>
-          <h4>Baixa latência</h4>
-          <p>Respostas rápidas para seus usuários, onde quer que estejam.</p>
-        </div>
-      </div>
-      <div class="benefit-item reveal reveal-delay-2">
-        <div class="benefit-dot"><i data-lucide="shield-check"></i></div>
-        <div>
-          <h4>Segurança</h4>
-          <p>Ambientes isolados e proteção ativa para seus dados e aplicações.</p>
-        </div>
-      </div>
-      <div class="benefit-item reveal reveal-delay-3">
-        <div class="benefit-dot"><i data-lucide="trending-up"></i></div>
-        <div>
-          <h4>Escalabilidade</h4>
-          <p>Cresça sem se preocupar: a infraestrutura acompanha seu projeto.</p>
-        </div>
-      </div>
-      <div class="benefit-item reveal reveal-delay-1">
-        <div class="benefit-dot"><i data-lucide="bar-chart-2"></i></div>
-        <div>
-          <h4>Monitoramento contínuo</h4>
-          <p>Seus serviços sempre sob vigilância para identificar problemas antes que afetem você.</p>
-        </div>
-      </div>
-      <div class="benefit-item reveal reveal-delay-2">
-        <div class="benefit-dot"><i data-lucide="wifi"></i></div>
-        <div>
-          <h4>Alta disponibilidade</h4>
-          <p>Uptime elevado para que seus serviços nunca fiquem fora do ar.</p>
-        </div>
-      </div>
-      <div class="benefit-item reveal reveal-delay-3">
-        <div class="benefit-dot"><i data-lucide="mouse-pointer-click"></i></div>
-        <div>
-          <h4>Fácil utilização</h4>
-          <p>Interface intuitiva e processo simplificado do deploy ao monitoramento.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- CTA FINAL -->
-<section class="cta-section">
-  <div class="section-inner">
+<!-- ═══════════════════════ CTA ═══════════════════════ -->
+<section class="section" aria-labelledby="ctaTitle">
+  <div class="container">
     <div class="cta-box reveal">
-      <div class="cta-glow"></div>
-      <h2>Pronto para começar?</h2>
-      <p>Junte-se à nossa comunidade e hospede seus projetos com qualidade.</p>
-      <div class="cta-actions">
-        <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener" class="btn btn-primary">
-          <i data-lucide="message-circle"></i> Discord
+      <div class="cta-box__glow" aria-hidden="true"></div>
+      <h2 class="cta-box__title" id="ctaTitle" data-i18n="cta.title">Pronto para começar?</h2>
+      <p class="cta-box__body" data-i18n="cta.body">
+        Junte-se à comunidade e hospede seus projetos com qualidade e estabilidade.
+      </p>
+      <div class="cta-box__actions">
+        <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener noreferrer"
+           class="btn btn--primary" data-i18n="cta.cta1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          Entrar no Discord
         </a>
-        <a href="/suporte" class="btn btn-secondary">
-          <i data-lucide="life-buoy"></i> Suporte
+        <a href="/suporte" class="btn btn--ghost" data-i18n="cta.cta2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Suporte
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <a href="/" class="footer-logo">
-      <img src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png" alt="Motter Cloud" />
-      Motter Cloud
-    </a>
-    <div class="footer-links">
-      <a href="mailto:contact@mottercloud.online">
-        <i data-lucide="mail"></i> contact@mottercloud.online
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <a href="/" class="footer__logo" aria-label="Motter Cloud">
+        <img class="footer__logo-img"
+             src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png"
+             alt="" loading="lazy" width="22" height="22" />
+        <span class="footer__logo-text">Motter Cloud</span>
       </a>
-      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener">
-        <i data-lucide="message-circle"></i> Discord
-      </a>
-      <a href="/suporte">
-        <i data-lucide="life-buoy"></i> Suporte
-      </a>
+
+      <nav class="footer__links" aria-label="Links do rodapé">
+        <a href="/discord" data-i18n="nav.discord">Discord</a>
+        <a href="/suporte" data-i18n="nav.support">Suporte</a>
+        <a href="mailto:contato@mottercloud.online">contato@mottercloud.online</a>
+      </nav>
+
+      <span class="footer__copy" data-i18n="footer.copy">&copy; 2025 Motter Cloud</span>
     </div>
-    <p class="footer-copy">© 2026 Motter Cloud. Todos os direitos reservados.</p>
   </div>
 </footer>
 
 <script>
-  // Lucide icons
-  lucide.createIcons();
+/* ─────────────────────────────────────────────────
+   i18n — TRANSLATIONS
+───────────────────────────────────────────────── */
+const I18N = {
+  pt: {
+    "meta.title": "Motter Cloud — Hospedagem para Bots e Aplicações",
+    "meta.desc": "Infraestrutura moderna para bots e aplicações Node.js e Python.",
+    "meta.og_title": "Motter Cloud",
+    "meta.og_desc": "Infraestrutura moderna para bots e aplicações.",
+    "nav.home": "Início", "nav.discord": "Discord", "nav.support": "Suporte", "nav.cta": "Discord",
+    "hero.badge": "Infraestrutura moderna",
+    "hero.title1": "Hospedagem simples para",
+    "hero.title2": "bots e aplicações",
+    "hero.subtitle": "Infraestrutura moderna para projetos Node.js e Python. Estável, rápida e com suporte dedicado.",
+    "hero.cta1": "Entrar no Discord", "hero.cta2": "Abrir Suporte",
+    "stats.uptime": "Runtime contínuo", "stats.node": "Runtime suportado", "stats.python": "Runtime suportado",
+    "stats.isolatedVal": "Isolado", "stats.isolated": "Containers por aplicação",
+    "features.eyebrow": "Recursos", "features.title": "Tudo que você precisa em um só lugar",
+    "features.lead": "Ferramentas e infraestrutura pensadas para quem quer velocidade e confiabilidade.",
+    "features.f1.title": "Deploy rápido", "features.f1.body": "Coloque sua aplicação no ar em segundos. Processo direto, sem configurações desnecessárias.",
+    "features.f2.title": "Runtime 24/7", "features.f2.body": "Bots e aplicações rodando continuamente, sem interrupções ou quedas inesperadas.",
+    "features.f3.title": "Monitoramento", "features.f3.body": "Acompanhe status e desempenho das suas aplicações em tempo real.",
+    "features.f4.title": "Containers isolados", "features.f4.body": "Cada aplicação em seu próprio container, garantindo segurança e estabilidade independentes.",
+    "features.f5.title": "Infraestrutura estável", "features.f5.body": "Servidores de alta performance com redundância para máxima disponibilidade.",
+    "features.f6.title": "Suporte dedicado", "features.f6.body": "Time disponível para ajudar a qualquer momento pelo Discord.",
+    "benefits.eyebrow": "Benefícios", "benefits.title": "Por que escolher a Motter Cloud?",
+    "benefits.lead": "Performance, confiabilidade e simplicidade no mesmo lugar.",
+    "benefits.b1.title": "Baixa latência", "benefits.b1.body": "Respostas rápidas para seus usuários, onde quer que estejam.",
+    "benefits.b2.title": "Segurança", "benefits.b2.body": "Ambientes isolados e proteção ativa para seus dados e aplicações.",
+    "benefits.b3.title": "Escalabilidade", "benefits.b3.body": "Cresça sem preocupação — a infraestrutura acompanha seu projeto.",
+    "benefits.b4.title": "Monitoramento contínuo", "benefits.b4.body": "Seus serviços sempre sob vigilância para antecipar problemas.",
+    "benefits.b5.title": "Alta disponibilidade", "benefits.b5.body": "Uptime elevado para que seus serviços nunca fiquem offline.",
+    "benefits.b6.title": "Fácil utilização", "benefits.b6.body": "Processo intuitivo do deploy ao monitoramento, sem curva de aprendizado.",
+    "cta.title": "Pronto para começar?",
+    "cta.body": "Junte-se à comunidade e hospede seus projetos com qualidade e estabilidade.",
+    "cta.cta1": "Entrar no Discord", "cta.cta2": "Suporte",
+    "footer.copy": "© 2025 Motter Cloud"
+  },
+  en: {
+    "meta.title": "Motter Cloud — Hosting for Bots and Applications",
+    "meta.desc": "Modern infrastructure for Node.js and Python bots and applications.",
+    "meta.og_title": "Motter Cloud",
+    "meta.og_desc": "Modern infrastructure for bots and applications.",
+    "nav.home": "Home", "nav.discord": "Discord", "nav.support": "Support", "nav.cta": "Discord",
+    "hero.badge": "Modern infrastructure",
+    "hero.title1": "Simple hosting for",
+    "hero.title2": "bots and applications",
+    "hero.subtitle": "Modern infrastructure for Node.js and Python projects. Stable, fast and with dedicated support.",
+    "hero.cta1": "Join Discord", "hero.cta2": "Open Support",
+    "stats.uptime": "Continuous runtime", "stats.node": "Supported runtime", "stats.python": "Supported runtime",
+    "stats.isolatedVal": "Isolated", "stats.isolated": "Containers per application",
+    "features.eyebrow": "Features", "features.title": "Everything you need in one place",
+    "features.lead": "Tools and infrastructure built for developers who want speed and reliability.",
+    "features.f1.title": "Fast deploy", "features.f1.body": "Get your application live in seconds. Straightforward process, no unnecessary setup.",
+    "features.f2.title": "Runtime 24/7", "features.f2.body": "Bots and applications running continuously, without unexpected interruptions or downtime.",
+    "features.f3.title": "Monitoring", "features.f3.body": "Track the status and performance of your applications in real time.",
+    "features.f4.title": "Isolated containers", "features.f4.body": "Each application in its own container, ensuring independent security and stability.",
+    "features.f5.title": "Stable infrastructure", "features.f5.body": "High-performance servers with redundancy for maximum availability.",
+    "features.f6.title": "Dedicated support", "features.f6.body": "Team available to help at any time via Discord.",
+    "benefits.eyebrow": "Benefits", "benefits.title": "Why choose Motter Cloud?",
+    "benefits.lead": "Performance, reliability and simplicity in one place.",
+    "benefits.b1.title": "Low latency", "benefits.b1.body": "Fast responses for your users, wherever they are.",
+    "benefits.b2.title": "Security", "benefits.b2.body": "Isolated environments and active protection for your data and applications.",
+    "benefits.b3.title": "Scalability", "benefits.b3.body": "Grow without worry — the infrastructure keeps up with your project.",
+    "benefits.b4.title": "Continuous monitoring", "benefits.b4.body": "Your services always under surveillance to anticipate issues.",
+    "benefits.b5.title": "High availability", "benefits.b5.body": "High uptime so your services never go offline.",
+    "benefits.b6.title": "Easy to use", "benefits.b6.body": "Intuitive process from deploy to monitoring, no learning curve.",
+    "cta.title": "Ready to get started?",
+    "cta.body": "Join the community and host your projects with quality and stability.",
+    "cta.cta1": "Join Discord", "cta.cta2": "Support",
+    "footer.copy": "© 2025 Motter Cloud"
+  },
+  es: {
+    "meta.title": "Motter Cloud — Hosting para Bots y Aplicaciones",
+    "meta.desc": "Infraestructura moderna para bots y aplicaciones Node.js y Python.",
+    "meta.og_title": "Motter Cloud",
+    "meta.og_desc": "Infraestructura moderna para bots y aplicaciones.",
+    "nav.home": "Inicio", "nav.discord": "Discord", "nav.support": "Soporte", "nav.cta": "Discord",
+    "hero.badge": "Infraestructura moderna",
+    "hero.title1": "Hosting simple para",
+    "hero.title2": "bots y aplicaciones",
+    "hero.subtitle": "Infraestructura moderna para proyectos Node.js y Python. Estable, rápida y con soporte dedicado.",
+    "hero.cta1": "Entrar al Discord", "hero.cta2": "Abrir Soporte",
+    "stats.uptime": "Runtime continuo", "stats.node": "Runtime soportado", "stats.python": "Runtime soportado",
+    "stats.isolatedVal": "Aislado", "stats.isolated": "Contenedores por aplicación",
+    "features.eyebrow": "Recursos", "features.title": "Todo lo que necesitas en un solo lugar",
+    "features.lead": "Herramientas e infraestructura pensadas para quienes quieren velocidad y confiabilidad.",
+    "features.f1.title": "Deploy rápido", "features.f1.body": "Pon tu aplicación en línea en segundos. Proceso directo, sin configuraciones innecesarias.",
+    "features.f2.title": "Runtime 24/7", "features.f2.body": "Bots y aplicaciones corriendo de forma continua, sin interrupciones ni caídas inesperadas.",
+    "features.f3.title": "Monitoreo", "features.f3.body": "Sigue el estado y rendimiento de tus aplicaciones en tiempo real.",
+    "features.f4.title": "Contenedores aislados", "features.f4.body": "Cada aplicación en su propio contenedor, garantizando seguridad y estabilidad independientes.",
+    "features.f5.title": "Infraestructura estable", "features.f5.body": "Servidores de alto rendimiento con redundancia para máxima disponibilidad.",
+    "features.f6.title": "Soporte dedicado", "features.f6.body": "Equipo disponible para ayudarte en cualquier momento por Discord.",
+    "benefits.eyebrow": "Beneficios", "benefits.title": "¿Por qué elegir Motter Cloud?",
+    "benefits.lead": "Rendimiento, confiabilidad y simplicidad en el mismo lugar.",
+    "benefits.b1.title": "Baja latencia", "benefits.b1.body": "Respuestas rápidas para tus usuarios, donde sea que estén.",
+    "benefits.b2.title": "Seguridad", "benefits.b2.body": "Entornos aislados y protección activa para tus datos y aplicaciones.",
+    "benefits.b3.title": "Escalabilidad", "benefits.b3.body": "Crece sin preocupaciones — la infraestructura sigue tu proyecto.",
+    "benefits.b4.title": "Monitoreo continuo", "benefits.b4.body": "Tus servicios siempre vigilados para anticipar problemas.",
+    "benefits.b5.title": "Alta disponibilidad", "benefits.b5.body": "Alto uptime para que tus servicios nunca estén fuera de línea.",
+    "benefits.b6.title": "Fácil de usar", "benefits.b6.body": "Proceso intuitivo desde el deploy hasta el monitoreo, sin curva de aprendizaje.",
+    "cta.title": "¿Listo para empezar?",
+    "cta.body": "Únete a la comunidad y aloja tus proyectos con calidad y estabilidad.",
+    "cta.cta1": "Entrar al Discord", "cta.cta2": "Soporte",
+    "footer.copy": "© 2025 Motter Cloud"
+  }
+};
 
-  // Theme
-  const root = document.documentElement;
-  const btn = document.getElementById('themeToggle');
-  const stored = localStorage.getItem('mc-theme');
-  const apply = (t) => {
-    root.setAttribute('data-theme', t);
-    btn.innerHTML = t === 'dark'
-      ? '<i data-lucide="sun"></i>'
-      : '<i data-lucide="moon"></i>';
-    lucide.createIcons();
-  };
-  apply(stored || 'dark');
-  btn.addEventListener('click', () => {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('mc-theme', next);
-    apply(next);
+/* ─────────────────────────────────────────────────
+   APPLY TRANSLATIONS
+───────────────────────────────────────────────── */
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.pt;
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) {
+      if (el.tagName === 'META') el.setAttribute('content', dict[key]);
+      else el.textContent = dict[key];
+    }
   });
+  // Update title
+  if (dict['meta.title']) document.title = dict['meta.title'];
+  localStorage.setItem('mc-lang', lang);
+}
+
+/* ─────────────────────────────────────────────────
+   THEME
+───────────────────────────────────────────────── */
+const SUN_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>`;
+const MOON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const btn = document.getElementById('themeToggle');
+  btn.innerHTML = theme === 'dark' ? SUN_SVG : MOON_SVG;
+  btn.setAttribute('aria-label', theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro');
+  localStorage.setItem('mc-theme', theme);
+}
+
+/* ─────────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────────── */
+function initReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}
+
+/* ─────────────────────────────────────────────────
+   BOOT
+───────────────────────────────────────────────── */
+(function boot() {
+  // Theme
+  const savedTheme = localStorage.getItem('mc-theme') || 'dark';
+  applyTheme(savedTheme);
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  });
+
+  // Language
+  const savedLang = localStorage.getItem('mc-lang') || 'pt';
+  const langSel = document.getElementById('langSelect');
+  langSel.value = savedLang;
+  applyLang(savedLang);
+  langSel.addEventListener('change', e => applyLang(e.target.value));
 
   // Hamburger
   const ham = document.getElementById('hamburger');
-  const mob = document.getElementById('mobileMenu');
-  ham.addEventListener('click', () => mob.classList.toggle('open'));
+  const drawer = document.getElementById('drawer');
+  ham.addEventListener('click', () => {
+    const open = drawer.classList.toggle('is-open');
+    ham.setAttribute('aria-expanded', open);
+  });
+  // Close drawer on link click
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    drawer.classList.remove('is-open');
+    ham.setAttribute('aria-expanded', false);
+  }));
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // Reveal
+  if ('IntersectionObserver' in window) initReveal();
+  else document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+})();
 </script>
 </body>
 </html>
