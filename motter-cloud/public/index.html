@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motter Cloud — Hospedagem para Bots e Aplicações</title>
+  <meta name="description" content="Hospedagem moderna para bots e aplicações Node.js e Python. Infraestrutura estável, suporte dedicado e deploy rápido." />
+  <meta name="keywords" content="hospedagem, bots, discord bot, nodejs, python, cloud, motter cloud" />
+  <meta property="og:title" content="Motter Cloud" />
+  <meta property="og:description" content="Hospedagem simples para bots e aplicações." />
+  <meta property="og:url" content="https://mottercloud.online" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://mottercloud.online/" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f4f3f0;
+      --bg2: #eceae6;
+      --surface: #ffffff;
+      --surface2: #f0eeea;
+      --border: rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.12);
+      --text: #111010;
+      --text2: #4a4845;
+      --text3: #7a7774;
+      --accent: #2a6cf6;
+      --accent2: #1a55d8;
+      --accent-glow: rgba(42,108,246,0.18);
+      --accent-soft: rgba(42,108,246,0.08);
+      --card-bg: rgba(255,255,255,0.7);
+      --card-border: rgba(0,0,0,0.07);
+      --glass: rgba(255,255,255,0.55);
+      --shadow: 0 2px 20px rgba(0,0,0,0.07);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.10);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --nav-bg: rgba(244,243,240,0.82);
+      --transition: 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b0c0f;
+      --bg2: #111318;
+      --surface: #15171c;
+      --surface2: #1c1f26;
+      --border: rgba(255,255,255,0.06);
+      --border2: rgba(255,255,255,0.10);
+      --text: #f0eff0;
+      --text2: #a8a7b0;
+      --text3: #65636e;
+      --accent: #4a8bff;
+      --accent2: #2a6cf6;
+      --accent-glow: rgba(74,139,255,0.20);
+      --accent-soft: rgba(74,139,255,0.10);
+      --card-bg: rgba(21,23,28,0.75);
+      --card-border: rgba(255,255,255,0.06);
+      --glass: rgba(21,23,28,0.60);
+      --shadow: 0 2px 20px rgba(0,0,0,0.35);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.50);
+      --nav-bg: rgba(11,12,15,0.82);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    /* ── SCROLLBAR ─────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+    /* ── GRID PATTERN ──────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.5;
+    }
+
+    /* ── NAVBAR ────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 clamp(1rem, 5vw, 3rem);
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text2);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: color var(--transition), background var(--transition);
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text);
+      background: var(--border);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-left: auto;
+    }
+
+    .btn-discord-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 8px;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .btn-discord-nav:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text2);
+      transition: all var(--transition);
+    }
+
+    .theme-toggle:hover { background: var(--surface2); color: var(--text); }
+    .theme-toggle svg { width: 16px; height: 16px; }
+
+    .hamburger {
+      display: none;
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      color: var(--text2);
+      transition: all var(--transition);
+    }
+
+    .hamburger svg { width: 18px; height: 18px; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem;
+      z-index: 99;
+      flex-direction: column;
+      gap: 0.5rem;
+      backdrop-filter: blur(20px);
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--text2);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: all var(--transition);
+    }
+
+    .mobile-menu a:hover { background: var(--border); color: var(--text); }
+
+    /* ── HERO ──────────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 1.5rem 5rem;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.06); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-glow);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 99px;
+      margin-bottom: 1.75rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge svg { width: 13px; height: 13px; }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-title span { color: var(--accent); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text2);
+      font-weight: 400;
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    /* ── BUTTONS ───────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition);
+      font-family: inherit;
+    }
+
+    .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 0 0 var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border2);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface2);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    /* ── SECTIONS ──────────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 5vw, 3rem);
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.85rem;
+    }
+
+    .section-label svg { width: 12px; height: 12px; }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+
+    .section-desc {
+      color: var(--text2);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── FEATURES GRID ─────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent-glow);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg), 0 0 0 1px var(--accent-glow);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-icon svg { width: 20px; height: 20px; }
+
+    .feature-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text2);
+      line-height: 1.7;
+    }
+
+    /* ── DIVIDER ───────────────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border2), transparent);
+      margin: 0 clamp(1rem, 5vw, 3rem);
+    }
+
+    /* ── BENEFITS ──────────────────────────────────── */
+    .benefits-section { background: var(--bg2); }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      transition: all var(--transition);
+    }
+
+    .benefit-item:hover {
+      border-color: var(--accent-glow);
+      background: var(--surface);
+    }
+
+    .benefit-dot {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .benefit-dot svg { width: 17px; height: 17px; }
+
+    .benefit-item h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .benefit-item p { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+
+    /* ── CTA ───────────────────────────────────────── */
+    .cta-section {
+      text-align: center;
+    }
+
+    .cta-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: clamp(3rem, 6vw, 5rem) 2rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .cta-glow {
+      position: absolute;
+      bottom: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 300px;
+      background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-box h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .cta-box p {
+      color: var(--text2);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem clamp(1rem, 5vw, 3rem);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .footer-logo img {
+      width: 26px; height: 26px;
+      object-fit: contain;
+      border-radius: 7px;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--text3);
+      font-size: 0.85rem;
+      transition: color var(--transition);
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+    .footer-links a svg { width: 14px; height: 14px; }
+
+    .footer-copy {
+      color: var(--text3);
+      font-size: 0.8rem;
+      width: 100%;
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      margin-top: 0.5rem;
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .btn-discord-nav { display: none; }
+      .hamburger { display: flex; }
+      .features-grid { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png" alt="Motter Cloud" />
+      Motter Cloud
+    </a>
+    <nav class="nav-links">
+      <a href="/" class="active">Início</a>
+      <a href="/discord">Discord</a>
+      <a href="/suporte">Suporte</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener" class="btn-discord-nav">
+        <i data-lucide="message-circle"></i> Discord
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+        <i data-lucide="sun"></i>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Início</a>
+  <a href="/discord">Discord</a>
+  <a href="/suporte">Suporte</a>
+  <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener">Entrar no Discord</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <i data-lucide="zap"></i>
+      Infraestrutura moderna
+    </div>
+    <h1 class="hero-title">
+      Hospedagem simples para<br />
+      <span>bots e aplicações</span>
+    </h1>
+    <p class="hero-sub">
+      Infraestrutura moderna para projetos Node.js e Python. Estável, rápida e com suporte dedicado.
+    </p>
+    <div class="hero-actions">
+      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener" class="btn btn-primary">
+        <i data-lucide="message-circle"></i> Entrar no Discord
+      </a>
+      <a href="/suporte" class="btn btn-secondary">
+        <i data-lucide="life-buoy"></i> Abrir Suporte
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- RECURSOS -->
+<section id="recursos">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label"><i data-lucide="layers"></i> Recursos</div>
+      <h2 class="section-title">Tudo que você precisa<br />em um só lugar</h2>
+      <p class="section-desc">Ferramentas e infraestrutura pensadas para desenvolvedores que querem velocidade e confiabilidade.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon"><i data-lucide="rocket"></i></div>
+        <h3>Deploy rápido</h3>
+        <p>Faça o deploy da sua aplicação em segundos. Processo simples, sem complicações.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon"><i data-lucide="clock"></i></div>
+        <h3>Runtime 24/7</h3>
+        <p>Seus bots e aplicações rodando continuamente, sem interrupções ou quedas inesperadas.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon"><i data-lucide="activity"></i></div>
+        <h3>Monitoramento</h3>
+        <p>Acompanhe o status e o desempenho das suas aplicações em tempo real.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon"><i data-lucide="box"></i></div>
+        <h3>Containers isolados</h3>
+        <p>Cada aplicação roda em um container isolado, garantindo segurança e estabilidade total.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon"><i data-lucide="server"></i></div>
+        <h3>Infraestrutura estável</h3>
+        <p>Servidores de alta performance com redundância para máxima disponibilidade.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon"><i data-lucide="headphones"></i></div>
+        <h3>Suporte dedicado</h3>
+        <p>Time disponível para ajudar você a qualquer momento pelo Discord.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- BENEFÍCIOS -->
+<section class="benefits-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label"><i data-lucide="star"></i> Benefícios</div>
+      <h2 class="section-title">Por que escolher<br />a Motter Cloud?</h2>
+      <p class="section-desc">Entregamos o que importa: performance, confiabilidade e facilidade de uso.</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-item reveal reveal-delay-1">
+        <div class="benefit-dot"><i data-lucide="gauge"></i></div>
+        <div>
+          <h4>Baixa latência</h4>
+          <p>Respostas rápidas para seus usuários, onde quer que estejam.</p>
+        </div>
+      </div>
+      <div class="benefit-item reveal reveal-delay-2">
+        <div class="benefit-dot"><i data-lucide="shield-check"></i></div>
+        <div>
+          <h4>Segurança</h4>
+          <p>Ambientes isolados e proteção ativa para seus dados e aplicações.</p>
+        </div>
+      </div>
+      <div class="benefit-item reveal reveal-delay-3">
+        <div class="benefit-dot"><i data-lucide="trending-up"></i></div>
+        <div>
+          <h4>Escalabilidade</h4>
+          <p>Cresça sem se preocupar: a infraestrutura acompanha seu projeto.</p>
+        </div>
+      </div>
+      <div class="benefit-item reveal reveal-delay-1">
+        <div class="benefit-dot"><i data-lucide="bar-chart-2"></i></div>
+        <div>
+          <h4>Monitoramento contínuo</h4>
+          <p>Seus serviços sempre sob vigilância para identificar problemas antes que afetem você.</p>
+        </div>
+      </div>
+      <div class="benefit-item reveal reveal-delay-2">
+        <div class="benefit-dot"><i data-lucide="wifi"></i></div>
+        <div>
+          <h4>Alta disponibilidade</h4>
+          <p>Uptime elevado para que seus serviços nunca fiquem fora do ar.</p>
+        </div>
+      </div>
+      <div class="benefit-item reveal reveal-delay-3">
+        <div class="benefit-dot"><i data-lucide="mouse-pointer-click"></i></div>
+        <div>
+          <h4>Fácil utilização</h4>
+          <p>Interface intuitiva e processo simplificado do deploy ao monitoramento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="section-inner">
+    <div class="cta-box reveal">
+      <div class="cta-glow"></div>
+      <h2>Pronto para começar?</h2>
+      <p>Junte-se à nossa comunidade e hospede seus projetos com qualidade.</p>
+      <div class="cta-actions">
+        <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener" class="btn btn-primary">
+          <i data-lucide="message-circle"></i> Discord
+        </a>
+        <a href="/suporte" class="btn btn-secondary">
+          <i data-lucide="life-buoy"></i> Suporte
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">
+      <img src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png" alt="Motter Cloud" />
+      Motter Cloud
+    </a>
+    <div class="footer-links">
+      <a href="mailto:contato@mottercloud.online">
+        <i data-lucide="mail"></i> contato@mottercloud.online
+      </a>
+      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener">
+        <i data-lucide="message-circle"></i> Discord
+      </a>
+      <a href="/suporte">
+        <i data-lucide="life-buoy"></i> Suporte
+      </a>
+    </div>
+    <p class="footer-copy">© 2025 Motter Cloud. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  // Lucide icons
+  lucide.createIcons();
+
+  // Theme
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const stored = localStorage.getItem('mc-theme');
+  const apply = (t) => {
+    root.setAttribute('data-theme', t);
+    btn.innerHTML = t === 'dark'
+      ? '<i data-lucide="sun"></i>'
+      : '<i data-lucide="moon"></i>';
+    lucide.createIcons();
+  };
+  apply(stored || 'dark');
+  btn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('mc-theme', next);
+    apply(next);
+  });
+
+  // Hamburger
+  const ham = document.getElementById('hamburger');
+  const mob = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => mob.classList.toggle('open'));
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

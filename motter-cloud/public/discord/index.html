@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discord — Motter Cloud</title>
+  <meta name="description" content="Entre no Discord da Motter Cloud para suporte, atualizações e comunidade." />
+  <link rel="canonical" href="https://mottercloud.online/discord" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f4f3f0;
+      --bg2: #eceae6;
+      --surface: #ffffff;
+      --surface2: #f0eeea;
+      --border: rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.12);
+      --text: #111010;
+      --text2: #4a4845;
+      --text3: #7a7774;
+      --accent: #2a6cf6;
+      --accent2: #1a55d8;
+      --accent-glow: rgba(42,108,246,0.18);
+      --accent-soft: rgba(42,108,246,0.08);
+      --card-bg: rgba(255,255,255,0.7);
+      --card-border: rgba(0,0,0,0.07);
+      --glass: rgba(255,255,255,0.55);
+      --shadow: 0 2px 20px rgba(0,0,0,0.07);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.10);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --nav-bg: rgba(244,243,240,0.82);
+      --transition: 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0b0c0f;
+      --bg2: #111318;
+      --surface: #15171c;
+      --surface2: #1c1f26;
+      --border: rgba(255,255,255,0.06);
+      --border2: rgba(255,255,255,0.10);
+      --text: #f0eff0;
+      --text2: #a8a7b0;
+      --text3: #65636e;
+      --accent: #4a8bff;
+      --accent2: #2a6cf6;
+      --accent-glow: rgba(74,139,255,0.20);
+      --accent-soft: rgba(74,139,255,0.10);
+      --card-bg: rgba(21,23,28,0.75);
+      --card-border: rgba(255,255,255,0.06);
+      --glass: rgba(21,23,28,0.60);
+      --shadow: 0 2px 20px rgba(0,0,0,0.35);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,0.50);
+      --nav-bg: rgba(11,12,15,0.82);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.5;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 clamp(1rem, 5vw, 3rem);
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    .nav-logo img { width: 30px; height: 30px; object-fit: contain; border-radius: 8px; }
+
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; flex: 1; }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text2);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 8px;
+      transition: color var(--transition), background var(--transition);
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--border); }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+
+    .btn-discord-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 8px;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .btn-discord-nav:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    .theme-toggle {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text2);
+      transition: all var(--transition);
+    }
+
+    .theme-toggle:hover { background: var(--surface2); color: var(--text); }
+    .theme-toggle svg { width: 16px; height: 16px; }
+
+    .hamburger {
+      display: none;
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      color: var(--text2);
+      transition: all var(--transition);
+    }
+
+    .hamburger svg { width: 18px; height: 18px; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem;
+      z-index: 99;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--text2);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: all var(--transition);
+    }
+    .mobile-menu a:hover { background: var(--border); color: var(--text); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 9rem 1.5rem 5rem;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 400px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.06); }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 680px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-glow);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 99px;
+      margin-bottom: 1.75rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge svg { width: 13px; height: 13px; }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-title span { color: var(--accent); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
+      color: var(--text2);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .discord-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: all 0.28s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 0 0 0 var(--accent-glow);
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .discord-cta-btn:hover {
+      background: var(--accent2);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 32px var(--accent-glow);
+    }
+
+    .discord-cta-btn svg { width: 20px; height: 20px; }
+
+    /* SECTIONS */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: clamp(3.5rem, 7vw, 6rem) clamp(1rem, 5vw, 3rem);
+    }
+
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.85rem;
+    }
+
+    .section-label svg { width: 12px; height: 12px; }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      line-height: 1.15;
+    }
+
+    .section-desc { color: var(--text2); font-size: 1rem; max-width: 520px; margin-bottom: 3rem; }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border2), transparent);
+      margin: 0 clamp(1rem, 5vw, 3rem);
+    }
+
+    .benefits-bg { background: var(--bg2); }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .benefit-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      backdrop-filter: blur(12px);
+      transition: all 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .benefit-card:hover {
+      border-color: var(--accent-glow);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .benefit-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .benefit-icon svg { width: 19px; height: 19px; }
+
+    .benefit-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .benefit-card p { font-size: 0.875rem; color: var(--text2); line-height: 1.65; }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem clamp(1rem, 5vw, 3rem);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .footer-logo img { width: 26px; height: 26px; object-fit: contain; border-radius: 7px; }
+
+    .footer-links { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+
+    .footer-links a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--text3);
+      font-size: 0.85rem;
+      transition: color 0.28s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+    .footer-links a svg { width: 14px; height: 14px; }
+
+    .footer-copy {
+      color: var(--text3);
+      font-size: 0.8rem;
+      width: 100%;
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      margin-top: 0.5rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .btn-discord-nav { display: none; }
+      .hamburger { display: flex; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png" alt="Motter Cloud" />
+      Motter Cloud
+    </a>
+    <nav class="nav-links">
+      <a href="/">Início</a>
+      <a href="/discord" class="active">Discord</a>
+      <a href="/suporte">Suporte</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener" class="btn-discord-nav">
+        <i data-lucide="message-circle"></i> Discord
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+        <i data-lucide="sun"></i>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Início</a>
+  <a href="/discord">Discord</a>
+  <a href="/suporte">Suporte</a>
+  <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener">Entrar no Discord</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><i data-lucide="users"></i> Comunidade</div>
+    <h1 class="hero-title">Comunidade<br /><span>Motter Cloud</span></h1>
+    <p class="hero-sub">
+      Entre no nosso Discord para receber suporte, atualizações e participar da comunidade.
+    </p>
+    <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener" class="discord-cta-btn">
+      <i data-lucide="message-circle"></i> Entrar no Discord
+    </a>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- BENEFÍCIOS -->
+<section class="benefits-bg">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label"><i data-lucide="star"></i> Por que entrar?</div>
+      <h2 class="section-title">Tudo que você encontra<br />no nosso servidor</h2>
+      <p class="section-desc">Nossa comunidade no Discord é o centro de tudo que acontece na Motter Cloud.</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card reveal reveal-delay-1">
+        <div class="benefit-icon"><i data-lucide="users"></i></div>
+        <h3>Suporte da comunidade</h3>
+        <p>Receba ajuda de outros usuários e da equipe diretamente no servidor.</p>
+      </div>
+      <div class="benefit-card reveal reveal-delay-2">
+        <div class="benefit-icon"><i data-lucide="bell"></i></div>
+        <h3>Atualizações</h3>
+        <p>Fique por dentro de todas as novidades, melhorias e lançamentos da plataforma.</p>
+      </div>
+      <div class="benefit-card reveal reveal-delay-3">
+        <div class="benefit-icon"><i data-lucide="megaphone"></i></div>
+        <h3>Avisos</h3>
+        <p>Comunicados importantes sobre manutenções, instabilidades e novas funcionalidades.</p>
+      </div>
+      <div class="benefit-card reveal reveal-delay-1">
+        <div class="benefit-icon"><i data-lucide="code"></i></div>
+        <h3>Ajuda técnica</h3>
+        <p>Canal dedicado para tirar dúvidas técnicas sobre seu projeto e deploy.</p>
+      </div>
+      <div class="benefit-card reveal reveal-delay-2">
+        <div class="benefit-icon"><i data-lucide="lightbulb"></i></div>
+        <h3>Sugestões</h3>
+        <p>Envie suas ideias e contribua para o desenvolvimento da plataforma.</p>
+      </div>
+      <div class="benefit-card reveal reveal-delay-3">
+        <div class="benefit-icon"><i data-lucide="message-square"></i></div>
+        <h3>Feedback</h3>
+        <p>Compartilhe sua experiência e ajude a moldar o futuro da Motter Cloud.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">
+      <img src="https://public-blob.squarecloud.dev/28fbc8894137ced089811faa1dd3e7d88b3a4fb0/aaaa/aaaa_mpqby11g-add2176765b5f394deab5ea7bb363b77.png" alt="Motter Cloud" />
+      Motter Cloud
+    </a>
+    <div class="footer-links">
+      <a href="mailto:contato@mottercloud.online"><i data-lucide="mail"></i> contato@mottercloud.online</a>
+      <a href="https://discord.gg/yMqynSPetK" target="_blank" rel="noopener"><i data-lucide="message-circle"></i> Discord</a>
+      <a href="/suporte"><i data-lucide="life-buoy"></i> Suporte</a>
+    </div>
+    <p class="footer-copy">© 2025 Motter Cloud. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const apply = (t) => {
+    root.setAttribute('data-theme', t);
+    btn.innerHTML = t === 'dark' ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+    lucide.createIcons();
+  };
+  apply(localStorage.getItem('mc-theme') || 'dark');
+  btn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('mc-theme', next);
+    apply(next);
+  });
+
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  });
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
