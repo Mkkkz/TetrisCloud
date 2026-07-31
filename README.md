@@ -63,7 +63,7 @@ e uma interface fluida e responsiva.
 
 ## Links Oficiais
 
-🌐 **Site:** https://tetriscloud.online
+🌐 **Site:** https://tetriscloud.vervel.app
 
 💬 **Discord:** https://discord.gg/zmxWErWSBH
 
