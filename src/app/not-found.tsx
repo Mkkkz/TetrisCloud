@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { Home, LifeBuoy, SearchX } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+
+export const metadata: Metadata = {
+  title: "404 — TetrisCloud",
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
