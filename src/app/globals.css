@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ─────────────────────────────────────────────────
+   DESIGN TOKENS — Light
+───────────────────────────────────────────────── */
+:root {
+  --bg-base:       #f8f9fb;
+  --bg-subtle:     #f0f2f6;
+  --bg-surface:    #ffffff;
+  --bg-elevated:   #ffffff;
+  --border-soft:   rgba(0,0,0,0.06);
+  --border-med:    rgba(0,0,0,0.10);
+  --text-primary:  #0d0f14;
+  --text-secondary:#52566b;
+  --text-muted:    #9095a8;
+  --accent:        #2563eb;
+  --accent-hover:  #1d4ed8;
+  --accent-subtle: rgba(37,99,235,0.08);
+  --accent-glow:   rgba(37,99,235,0.16);
+  --green:         #16a34a;
+  --green-subtle:  rgba(22,163,74,0.08);
+  --green-glow:    rgba(22,163,74,0.20);
+  --amber:         #d97706;
+  --amber-subtle:  rgba(217,119,6,0.08);
+  --card-bg:       rgba(255,255,255,0.80);
+  --card-border:   rgba(0,0,0,0.07);
+  --nav-bg:        rgba(248,249,251,0.88);
+  --shadow-sm:     0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:     0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,0.10);
+  --nav-h: 64px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur: 220ms;
+}
+
+/* ─────────────────────────────────────────────────
+   DESIGN TOKENS — Dark
+───────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg-base:       #0a0b0f;
+  --bg-subtle:     #0f1116;
+  --bg-surface:    #13151b;
+  --bg-elevated:   #191c24;
+  --border-soft:   rgba(255,255,255,0.05);
+  --border-med:    rgba(255,255,255,0.09);
+  --text-primary:  #edeef2;
+  --text-secondary:#9095a8;
+  --text-muted:    #4e5468;
+  --accent:        #3b82f6;
+  --accent-hover:  #2563eb;
+  --accent-subtle: rgba(59,130,246,0.10);
+  --accent-glow:   rgba(59,130,246,0.18);
+  --green:         #22c55e;
+  --green-subtle:  rgba(34,197,94,0.08);
+  --green-glow:    rgba(34,197,94,0.18);
+  --amber:         #f59e0b;
+  --amber-subtle:  rgba(245,158,11,0.10);
+  --card-bg:       rgba(19,21,27,0.85);
+  --card-border:   rgba(255,255,255,0.05);
+  --nav-bg:        rgba(10,11,15,0.88);
+  --shadow-sm:     0 1px 3px rgba(0,0,0,0.30);
+  --shadow-md:     0 4px 16px rgba(0,0,0,0.40);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,0.55);
+}
+
+/* ─────────────────────────────────────────────────
+   TAILWIND THEME MAPPING
+───────────────────────────────────────────────── */
+@theme inline {
+  --color-base:       var(--bg-base);
+  --color-subtle:     var(--bg-subtle);
+  --color-surface:    var(--bg-surface);
+  --color-elevated:   var(--bg-elevated);
+  --color-soft:       var(--border-soft);
+  --color-med:        var(--border-med);
+  --color-primary:    var(--text-primary);
+  --color-secondary:  var(--text-secondary);
+  --color-muted:      var(--text-muted);
+  --color-accent:     var(--accent);
+  --color-accent-hover:  var(--accent-hover);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-accent-glow:   var(--accent-glow);
+  --color-green:      var(--green);
+  --color-green-subtle:  var(--green-subtle);
+  --color-green-glow:    var(--green-glow);
+  --color-amber:      var(--amber);
+  --color-amber-subtle:  var(--amber-subtle);
+  --color-card-bg:    var(--card-bg);
+  --color-card-border:   var(--card-border);
+  --color-nav-bg:     var(--nav-bg);
+
+  --font-sans:    var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-syne), sans-serif;
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-2xl: 24px;
+
+  --breakpoint-sm: 35rem;   /* 560px */
+  --breakpoint-md: 56.25rem; /* 900px */
+}
+
+/* ─────────────────────────────────────────────────
+   BASE
+───────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+::selection {
+  background: var(--accent-subtle);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-med); border-radius: 99px; }
+
+/* Subtle dot grid background */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(circle, var(--border-soft) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.7;
+}
+
+/* ─────────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+.reveal-d1 { transition-delay: 0.07s; }
+.reveal-d2 { transition-delay: 0.14s; }
+.reveal-d3 { transition-delay: 0.21s; }
+.reveal-d4 { transition-delay: 0.28s; }
+.reveal-d5 { transition-delay: 0.35s; }
+.reveal-d6 { transition-delay: 0.42s; }
+
+/* Glow pulse */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.animate-glow-pulse {
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+/* Status pulse */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-status-pulse {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* Slide down (mobile drawer) */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-down {
+  animation: slideDown 0.2s var(--ease);
+}
+
+/* TV / 4K — scale up base font */
+@media (min-width: 2400px) {
+  html { font-size: 18px; }
+}
